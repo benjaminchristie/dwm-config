@@ -1,24 +1,26 @@
 --- dwm.c
 +++ dwm.c
-@@ -317,6 +317,10 @@ applysizehints(Client *c, int *x, int *y, int *w, int *h, int interact)
- 	int baseismin;
- 	Monitor *m = c->mon;
- 
-+	// return 1 if layout is monocle
-+	if (&monocle == c->mon->lt[c->mon->sellt]->arrange)
-+		return 1;
-+
- 	/* set minimum possible */
- 	*w = MAX(1, *w);
- 	*h = MAX(1, *h);
-@@ -1282,6 +1286,11 @@ resizeclient(Client *c, int x, int y, int w, int h)
+@@ -803,7 +804,11 @@ focus(Client *c)
+ 		detachstack(c);
+ 		attachstack(c);
+ 		grabbuttons(c, 1);
+-		XSetWindowBorder(dpy, c->win, scheme[SchemeSel][ColBorder].pixel);
++		/* Avoid flickering when another client appears and the border
++		 * is restored */
++		if (!solitary(c)) {
++			XSetWindowBorder(dpy, c->win, scheme[SchemeSel][ColBorder].pixel);
++		}
+ 		setfocus(c);
+ 	} else {
+ 		XSetInputFocus(dpy, root, RevertToPointerRoot, CurrentTime);
+@@ -1289,6 +1294,11 @@ resizeclient(Client *c, int x, int y, int w, int h)
  	c->oldw = c->w; c->w = wc.width = w;
  	c->oldh = c->h; c->h = wc.height = h;
  	wc.border_width = c->bw;
-+	if ((&monocle == c->mon->lt[c->mon->sellt]->arrange) && (!c->isfloating)) {
-+		wc.border_width = 0;
++	if (solitary(c)) {
 +		c->w = wc.width += c->bw * 2;
 +		c->h = wc.height += c->bw * 2;
++		wc.border_width = 0;
 +	}
  	XConfigureWindow(dpy, c->win, CWX|CWY|CWWidth|CWHeight|CWBorderWidth, &wc);
  	configure(c);

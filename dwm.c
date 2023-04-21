@@ -266,6 +266,7 @@ static void setupepoll(void);
 static void seturgent(Client *c, int urg);
 static void showhide(Client *c);
 static void sigchld(int unused);
+static int solitary(Client *c);
 static void spawn(const Arg *arg);
 static Monitor *systraytomon(Monitor *m);
 static void tag(const Arg *arg);
@@ -667,7 +668,7 @@ clientmessage(XEvent *e)
         return;
     }
 
-    unsigned int i;
+    /* unsigned int i; */
     if (!c)
         return;
     if (cme->message_type == netatom[NetWMState]) {
@@ -676,14 +677,16 @@ clientmessage(XEvent *e)
             setfullscreen(c, (cme->data.l[0] == 1 /* _NET_WM_STATE_ADD    */
                         || (cme->data.l[0] == 2 /* _NET_WM_STATE_TOGGLE */ && !c->isfullscreen)));
     } else if (cme->message_type == netatom[NetActiveWindow]) {
-	    for (i = 0; i < LENGTH(tags) && !((1 << i) & c->tags); i++);
-	    if (i < LENGTH(tags)) {
-		    const Arg a = {.ui = 1 << i};
-		    selmon = c->mon;
-		    view(&a);
-		    focus(c);
-		    restack(selmon);
-	    }
+	if (c != selmon->sel && !c->isurgent)
+	    seturgent(c, 1);
+	    /* for (i = 0; i < LENGTH(tags) && !((1 << i) & c->tags); i++); */
+	    /* if (i < LENGTH(tags)) { */
+		    /* const Arg a = {.ui = 1 << i}; */
+		    /* selmon = c->mon; */
+		    /* view(&a); */
+		    /* focus(c); */
+		    /* restack(selmon); */
+	    /* } */
     }
 }
 
@@ -1032,7 +1035,11 @@ focus(Client *c)
         detachstack(c);
         attachstack(c);
         grabbuttons(c, 1);
-        XSetWindowBorder(dpy, c->win, scheme[SchemeSel][ColBorder].pixel);
+	/* Avoid flickering when another client appears and the border
+	 * is restored */
+	if (!solitary(c)) {
+		XSetWindowBorder(dpy, c->win, scheme[SchemeSel][ColBorder].pixel);
+	}
         setfocus(c);
     } else {
         XSetInputFocus(dpy, root, RevertToPointerRoot, CurrentTime);
@@ -1583,6 +1590,11 @@ resizeclient(Client *c, int x, int y, int w, int h)
 		c->h = wc.height += c->bw * 2;
 	}
     wc.border_width = c->bw;
+    if (solitary(c)) {
+	    c->w = wc.width += c->bw * 2;
+	    c->h = wc.height += c->bw * 2;
+	    wc.border_width = 0;
+    }
     XConfigureWindow(dpy, c->win, CWX|CWY|CWWidth|CWHeight|CWBorderWidth, &wc);
     configure(c);
     XSync(dpy, False);
@@ -1754,6 +1766,15 @@ run(void)
             }
         }
     }
+}
+
+int
+solitary(Client *c)
+{
+	return ((nexttiled(c->mon->clients) == c && !nexttiled(c->next))
+	    || &monocle == c->mon->lt[c->mon->sellt]->arrange)
+	    && !c->isfullscreen && !c->isfloating
+	    && NULL != c->mon->lt[c->mon->sellt]->arrange;
 }
 
 void
