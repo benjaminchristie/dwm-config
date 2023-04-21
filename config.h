@@ -16,8 +16,8 @@ static const int showsystray = 0; /* 0 means no systray */
 // end systray
 static const unsigned int borderpx = 2; /* border pixel of windows */
 static const unsigned int snap = 4;     /* snap pixel */
-static const unsigned int gappih = 6; /* 12, horiz inner gap between windows */
-static const unsigned int gappiv = 6; /* 25, vert inner gap between windows */
+static const unsigned int gappih = 0; /* 12, horiz inner gap between windows */
+static const unsigned int gappiv = 0; /* 25, vert inner gap between windows */
 static const unsigned int gappoh =
 28; /* 4, horiz outer gap between windows and screen edge */
 static const unsigned int gappov =
