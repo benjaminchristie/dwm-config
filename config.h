@@ -191,7 +191,6 @@ static const char *quitcmd[] = {"safe_dwm_quit", NULL};
 static const char *firefoxcmd[] = {"firefox", NULL};
 static const char *chromecmd[] = {"chromium", NULL};
 static const char *pcmanfmcmd[] = {"thunar", NULL};
-static const char *zatist[] = {"zathist", NULL};
 static const char *mutecmd[] = {"pactl", "set-sink-mute", "@DEFAULT_SINK@",
     "toggle", NULL};
 static const char *volupcmd[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@",
@@ -225,7 +224,6 @@ static Key keys[] = {
     {MODKEY | ShiftMask, XK_m, spawn, {.v = rofiwindowscmd}},
     {MODKEY | ShiftMask, XK_f, spawn, {.v = rofifilescmd}},
     {MODKEY | ShiftMask, XK_s, spawn, {.v = shotcmd}},
-    {MODKEY | ShiftMask, XK_z, spawn, {.v = zatist}},
     {MODKEY | Mod1Mask | ShiftMask, XK_Return, spawn, {.v = chromecmd}},
     {MODKEY | Mod1Mask | ShiftMask, XK_p, spawn, {.v = pcmanfmcmd}},
     {MODKEY, XK_m, spawn, {.v = roficmd}},
