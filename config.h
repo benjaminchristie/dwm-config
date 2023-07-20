@@ -4,14 +4,14 @@
 // systray
 
 static const unsigned int systraypinning =
-0; /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor
-      X */
+    0; /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor
+          X */
 static const unsigned int systrayonleft =
-1; /* 0: systray in the right corner, >0: systray on left of status text */
+    1; /* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 3; /* systray spacing */
 static const int systraypinningfailfirst =
-1; /* 1: if pinning fails, display systray on the first monitor, False:
-      display systray on the last monitor*/
+    1; /* 1: if pinning fails, display systray on the first monitor, False:
+          display systray on the last monitor*/
 static const int showsystray = 0; /* 0 means no systray */
 // end systray
 static const unsigned int borderpx = 2; /* border pixel of windows */
@@ -19,11 +19,11 @@ static const unsigned int snap = 4;     /* snap pixel */
 static const unsigned int gappih = 0; /* 12, horiz inner gap between windows */
 static const unsigned int gappiv = 0; /* 25, vert inner gap between windows */
 static const unsigned int gappoh =
-28; /* 4, horiz outer gap between windows and screen edge */
+    28; /* 4, horiz outer gap between windows and screen edge */
 static const unsigned int gappov =
-0; /* 6,  vert outer gap between windows and screen edge */
+    0; /* 6,  vert outer gap between windows and screen edge */
 static int smartgaps =
-0; /* 1 means no outer gap when there is only one window */
+    0; /* 1 means no outer gap when there is only one window */
 static const int showbar = 0; /* 0 means no bar */
 static const int topbar = 1;  /* 0 means bottom bar */
 static const int usealtbar = 1;
@@ -49,23 +49,23 @@ static const char *colors[][3] = {
     [SchemeNorm] = {col_white, col_gray1, col_gray1},
     [SchemeSel] = {col_white, col_mag, col_gray2},
     [SchemeStatus] = {col_white, col_gray1,
-        "#000000"}, // Statusbar right {text,background,not used
-                    // but cannot be empty}
+                      "#000000"},  // Statusbar right {text,background,not used
+                                   // but cannot be empty}
     [SchemeTagsSel] = {col_white, col_mag,
-        "#000000"}, // Tagbar left selected {text,background,not
-                    // used but cannot be empty}
+                       "#000000"},  // Tagbar left selected {text,background,not
+                                    // used but cannot be empty}
     [SchemeTagsNorm] =
-    {col_white, col_gray1,
-        "#000000"}, // Tagbar left unselected {text,background,not used but
-                    // cannot be empty}
+        {col_white, col_gray1,
+         "#000000"},  // Tagbar left unselected {text,background,not used but
+                      // cannot be empty}
     [SchemeInfoSel] =
-    {col_white, col_gray1,
-        "#000000"}, // infobar middle  selected {text,background,not used but
-                    // cannot be empty}
+        {col_white, col_gray1,
+         "#000000"},  // infobar middle  selected {text,background,not used but
+                      // cannot be empty}
     [SchemeInfoNorm] =
-    {col_white, col_gray1,
-        "#000000"}, // infobar middle  unselected {text,background,not used but
-                    // cannot be empty}
+        {col_white, col_gray1,
+         "#000000"},  // infobar middle  unselected {text,background,not used
+                      // but cannot be empty}
 };
 
 /* tagging */
@@ -85,17 +85,17 @@ static const Rule rules[] = {
 static const float mfact = 0.6; /* factor of master area size [0.05..0.95] */
 static const int nmaster = 1;   /* number of clients in master area */
 static const int resizehints =
-0; /* 1 means respect size hints in tiled resizals */
+    0; /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen =
-1; /* 1 will force focus on the fullscreen window */
+    1; /* 1 will force focus on the fullscreen window */
 
-#define FORCE_VSPLIT                                                           \
+#define FORCE_VSPLIT \
     1 /* nrowgrid layout: force two clients to always split vertically */
 #include "vanitygaps.c"
 
 static const Layout layouts[] = {
     /* symbol     arrange function */
-    {"[]=", tile}, /* first entry is default */
+    {"[]=", tile},    /* first entry is default */
     {"[M]", monocle}, /* first entry is default */
     {"[@]", spiral},
     //{ "[\\]",     dwindle },
@@ -114,76 +114,42 @@ static const Layout layouts[] = {
 
 /* key definitions */
 #define MODKEY Mod4Mask
-#define TAGKEYS(KEY, TAG)                                                      \
-{MODKEY, KEY, view, {.ui = 1 << TAG}},                                       \
-{MODKEY | ControlMask, KEY, toggleview, {.ui = 1 << TAG}},               \
-{MODKEY | ShiftMask, KEY, tag, {.ui = 1 << TAG}},                        \
-{MODKEY | ControlMask | ShiftMask, KEY, toggletag, {.ui = 1 << TAG}},
+#define TAGKEYS(KEY, TAG)                                          \
+    {MODKEY, KEY, view, {.ui = 1 << TAG}},                         \
+        {MODKEY | ControlMask, KEY, toggleview, {.ui = 1 << TAG}}, \
+        {MODKEY | ShiftMask, KEY, tag, {.ui = 1 << TAG}},          \
+        {MODKEY | ControlMask | ShiftMask, KEY, toggletag, {.ui = 1 << TAG}},
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
-#define SHCMD(cmd)                                                             \
-{                                                                            \
-    .v = (const char *[]) { "/bin/sh", "-c", cmd, NULL }                       \
-}
-#include <X11/XF86keysym.h> // for audio keyboard shortcuts
+#define SHCMD(cmd)                                           \
+    {                                                        \
+        .v = (const char *[]) { "/bin/sh", "-c", cmd, NULL } \
+    }
+#include <X11/XF86keysym.h>  // for audio keyboard shortcuts
 /* commands */
 static char dmenumon[2] =
-"0"; /* component of dmenucmd, manipulated in spawn() */
+    "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = {
     "dmenu_run", "-c",    "-g",      "4",       "-l",      "10",  "-m",
     dmenumon,    "-fn",   dmenufont, "-nb",     col_gray1, "-nf", col_gray3,
     "-sb",       col_mag, "-sf",     col_gray4, NULL};
-static const char *roficmd[] = {"rofi",
-    "-combi-modi",
-    "drun,ssh",
-    "-theme",
+static const char *roficmd[] = {
+    "rofi", "-combi-modi", "drun,ssh", "-theme",
     //"base16-tomorrow-night",
-    "tokyonight",
-    "-font",
-    "\"RedHatText 16\"",
-    "-show",
-    "combi",
-    "-icon-theme",
-    "\"Paper\"",
-    "-show-icons",
-    "-m",
-    "-auto-select",
-    "monitor", 
-    "-5"};
+    "tokyonight", "-font", "\"RedHatText 16\"", "-show", "combi", "-icon-theme",
+    "\"Paper\"", "-show-icons", "-m", "-auto-select", "monitor", "-5"};
 
-static const char *rofifilescmd[] = {"rofi",
-    "-mode",
-    "filebrowser",
-    "-theme",
+static const char *rofifilescmd[] = {"rofi", "-mode", "filebrowser", "-theme",
+                                     //"base16-tomorrow-night",
+                                     "tokyonight", "-font", "\"RedHatText 16\"",
+                                     "-show", "filebrowser", "-icon-theme",
+                                     "\"Paper\"", "-show-icons", "-m",
+                                     "-auto-select", "monitor", "-5"};
+static const char *rofiwindowscmd[] = {
+    "rofi", "-mode", "window", "-theme",
     //"base16-tomorrow-night",
-    "tokyonight",
-    "-font",
-    "\"RedHatText 16\"",
-    "-show",
-    "filebrowser",
-    "-icon-theme",
-    "\"Paper\"",
-    "-show-icons",
-    "-m",
-    "-auto-select",
-    "monitor", 
-    "-5"};
-static const char *rofiwindowscmd[] = {"rofi",
-    "-mode",
-    "window",
-    "-theme",
-    //"base16-tomorrow-night",
-    "tokyonight",
-    "-font",
-    "\"RedHatText 16\"",
-    "-show",
-    "window",
-    "-icon-theme",
-    "\"Paper\"",
-    "-show-icons",
-    "-m",
-    "-auto-select",
-    "monitor", 
+    "tokyonight", "-font", "\"RedHatText 16\"", "-show", "window",
+    "-icon-theme", "\"Paper\"", "-show-icons", "-m", "-auto-select", "monitor",
     "-5"};
 static const char *termcmd[] = {"alacritty", NULL};
 static const char *xsecurelock[] = {"xsecurelock", NULL};
@@ -192,30 +158,33 @@ static const char *firefoxcmd[] = {"firefox", NULL};
 static const char *chromecmd[] = {"chromium", NULL};
 static const char *pcmanfmcmd[] = {"thunar", NULL};
 static const char *mutecmd[] = {"pactl", "set-sink-mute", "@DEFAULT_SINK@",
-    "toggle", NULL};
+                                "toggle", NULL};
 static const char *volupcmd[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@",
-    "+5%", NULL};
+                                 "+5%", NULL};
 static const char *voldowncmd[] = {"pactl", "set-sink-volume", "@DEFAULT_SINK@",
-    "-5%", NULL};
-static const char *brupkbcmd[] = {"brightnessctl", "--device='spi::kbd_backlight", "set", "+50%", NULL};
-static const char *brdownkbcmd[] = {"brightnessctl", "--device='spi::kbd_backlight", "set", "50%-", NULL};
+                                   "-5%", NULL};
+static const char *brupkbcmd[] = {
+    "brightnessctl", "--device='spi::kbd_backlight", "set", "+50%", NULL};
+static const char *brdownkbcmd[] = {
+    "brightnessctl", "--device='spi::kbd_backlight", "set", "50%-", NULL};
 static const char *brupcmd[] = {"light", "-A", "5", NULL};
 static const char *brdowncmd[] = {"light", "-U", "5", NULL};
 static const char *shotcmd[] = {"flameshot", "gui", NULL};
 static const char *polybartogglecmd[] = {"toggle-polybar", NULL};
-/* static const char *emacscmd[] = {"emacsclient", "-c", "-a", "'emacs'", NULL}; */
+/* static const char *emacscmd[] = {"emacsclient", "-c", "-a", "'emacs'", NULL};
+ */
 // previous 5 lines were for volume and backlight control
 static Key keys[] = {
-    /* modifier                     key        function        argument */
+/* modifier                     key        function        argument */
 #define KeyboardUp 0x10081000 + 0x0ef
 #define KeyboardDown 0x10081000 + 0x0f0
     {0, XF86XK_AudioMute, spawn, {.v = mutecmd}},
     {0, XF86XK_AudioLowerVolume, spawn, {.v = voldowncmd}},
     {0, XF86XK_AudioRaiseVolume, spawn, {.v = volupcmd}},
-    {0, XF86XK_KbdBrightnessUp,  spawn,    {.v = brupkbcmd}},
-    {0, XF86XK_KbdBrightnessDown, spawn,  {.v = brdownkbcmd}},
-    {0, KeyboardUp, spawn,    {.v = brupkbcmd}},
-    {0, KeyboardDown, spawn,  {.v = brdownkbcmd}},
+    {0, XF86XK_KbdBrightnessUp, spawn, {.v = brupkbcmd}},
+    {0, XF86XK_KbdBrightnessDown, spawn, {.v = brdownkbcmd}},
+    {0, KeyboardUp, spawn, {.v = brupkbcmd}},
+    {0, KeyboardDown, spawn, {.v = brdownkbcmd}},
     {0, XF86XK_MonBrightnessUp, spawn, {.v = brupcmd}},
     {0, XF86XK_MonBrightnessDown, spawn, {.v = brdowncmd}},
     {MODKEY | ShiftMask, XK_l, spawn, {.v = polybartogglecmd}},
@@ -273,15 +242,14 @@ static Key keys[] = {
     {MODKEY | ShiftMask, XK_q, spawn, {.v = quitcmd}},
     TAGKEYS(XK_1, 0) TAGKEYS(XK_2, 1) TAGKEYS(XK_3, 2) TAGKEYS(XK_4, 3)
         TAGKEYS(XK_5, 4) TAGKEYS(XK_6, 5) TAGKEYS(XK_7, 6) TAGKEYS(XK_8, 7)
-        TAGKEYS(XK_9, 8)
-};
+            TAGKEYS(XK_9, 8)};
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
  * ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
     /* click                event mask      button          function argument
-    */
+     */
     {ClkLtSymbol, 0, Button1, setlayout, {0}},
     {ClkLtSymbol, 0, Button3, setlayout, {.v = &layouts[2]}},
     {ClkWinTitle, 0, Button2, zoom, {0}},

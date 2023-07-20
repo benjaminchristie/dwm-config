@@ -11,15 +11,15 @@ typedef struct IPCClient IPCClient;
  * linked list
  */
 struct IPCClient {
-  int fd;
-  int subscriptions;
+    int fd;
+    int subscriptions;
 
-  char *buffer;
-  uint32_t buffer_size;
+    char *buffer;
+    uint32_t buffer_size;
 
-  struct epoll_event event;
-  IPCClient *next;
-  IPCClient *prev;
+    struct epoll_event event;
+    IPCClient *next;
+    IPCClient *prev;
 };
 
 typedef IPCClient *IPCClientList;
