@@ -75,6 +75,7 @@
 #define VERSION_MINOR 0
 #define XEMBED_EMBEDDED_VERSION (VERSION_MAJOR << 16) | VERSION_MINOR
 
+
 /* enums */
 enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
 enum {
@@ -257,7 +258,7 @@ static void focusstack(const Arg *arg);
 static Atom getatomprop(Client *c, Atom prop);
 static int getrootptr(int *x, int *y);
 static long getstate(Window w);
-static unsigned int getsystraywidth();
+static unsigned int getsystraywidth(void);
 static int gettextprop(Window w, Atom atom, char *text, unsigned int size);
 static void grabbuttons(Client *c, int focused);
 static void grabkeys(void);
@@ -1118,7 +1119,7 @@ long getstate(Window w) {
     return result;
 }
 
-unsigned int getsystraywidth() {
+unsigned int getsystraywidth(void) {
     unsigned int w = 0;
     Client *i;
     if (showsystray)
@@ -2151,7 +2152,7 @@ void updatebarpos(Monitor *m) {
         m->by = -bh;
 }
 
-void updateclientlist() {
+void updateclientlist(void) {
     Client *c;
     Monitor *m;
 
