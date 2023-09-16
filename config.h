@@ -16,12 +16,12 @@ static const int showsystray = 0; /* 0 means no systray */
 // end systray
 static const unsigned int borderpx = 2; /* border pixel of windows */
 static const unsigned int snap = 4;     /* snap pixel */
-static const unsigned int gappih = 4; /* 12, horiz inner gap between windows */
-static const unsigned int gappiv = 4; /* 25, vert inner gap between windows */
+static const unsigned int gappih = 8; /* 12, horiz inner gap between windows */
+static const unsigned int gappiv = 8; /* 25, vert inner gap between windows */
 static const unsigned int gappoh =
-    32; /* 4, horiz outer gap between windows and screen edge */
+    38; /* 4, horiz outer gap between windows and screen edge */
 static const unsigned int gappov =
-    5; /* 6,  vert outer gap between windows and screen edge */
+    16; /* 6,  vert outer gap between windows and screen edge */
 static int smartgaps =
     0; /* 1 means no outer gap when there is only one window */
 static const int showbar = 0; /* 0 means no bar */
@@ -134,9 +134,8 @@ static const char *dmenucmd[] = {
     dmenumon,    "-fn",   dmenufont, "-nb",     col_gray1, "-nf", col_gray3,
     "-sb",       col_mag, "-sf",     col_gray4, NULL};
 static const char *roficmd[] = {
-    "rofi", "-combi-modi", "drun,ssh", "-theme",
-    //"base16-tomorrow-night",
-    "tokyonight", "-font", "\"RedHatText 16\"", "-show", "combi", "-icon-theme",
+    "rofi", "-combi-modi", "drun,ssh",
+    "-font", "\"RedHatText 16\"", "-show", "combi", "-icon-theme",
     "\"Paper\"", "-show-icons", "-m", "-auto-select", "monitor", "-5"};
 
 static const char *rofifilescmd[] = {"rofi", "-mode", "filebrowser", "-theme",
@@ -146,9 +145,9 @@ static const char *rofifilescmd[] = {"rofi", "-mode", "filebrowser", "-theme",
                                      "\"Paper\"", "-show-icons", "-m",
                                      "-auto-select", "monitor", "-5"};
 static const char *rofiwindowscmd[] = {
-    "rofi", "-mode", "window", "-theme",
+    "rofi", "-mode", "window", 
     //"base16-tomorrow-night",
-    "tokyonight", "-font", "\"RedHatText 16\"", "-show", "window",
+    "-font", "\"RedHatText 16\"", "-show", "window",
     "-icon-theme", "\"Paper\"", "-show-icons", "-m", "-auto-select", "monitor",
     "-5"};
 static const char *termcmd[] = {"alacritty", NULL};
